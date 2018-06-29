@@ -1,0 +1,94 @@
+{% extends "layouts/main.html" %} 
+
+{% block currency %}
+
+<h2>W&auml;hrungsrechner</h2>
+
+<p>Der aktuelle Umrechnungskurs von {{ currency1 }} zu {{ currency2 }} beträgt: <strong>{{ rate }}</strong></p>
+
+<div class="row">
+    <div class="four columns">
+        <form method="GET">
+            <label for="currency1">W&auml;hle W&auml;hrung 1 aus:</label>
+            <select class="u-full-width" name="currency1" id="currency1" onchange='this.form.submit()'>
+                {% for key, value in curr_dict.items() %}
+                    {% if key == currency1 %}
+                        <option selected="{{ currency1 }}" value="{{ key }}">{{ key }} - {{ value }}</option>
+                    {% endif %}
+                    <option value="{{ key }}">{{ key }} - {{ value }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="currency2">W&auml;hle W&auml;hrung 2 aus:</label>
+            <select class="u-full-width" name="currency2" id="currency2" onchange='this.form.submit()'>
+                {% for key, value in curr_dict.items() %}
+                    {% if key == currency2 %}
+                        <option selected="{{ currency2 }}" value="{{ key }}">{{ key }} - {{ value }}</option>
+                    {% endif %}
+                    <option value="{{ key }}">{{ key }} - {{ value }}</option>
+                {% endfor %}
+            </select>
+            
+            <noscript>
+                <input class="button-primary" type="submit" value="Umrechnen" id="button"/>
+            </noscript>
+        </form>
+    </div>
+
+    <div class="four columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        {{currency1}}
+                    </th>
+                    <th>
+                        {{currency2}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for qty, cash in result1.items() %}
+            <tr>
+                <td>
+                    {{ qty }}
+                    </td>
+                <td>
+                    {{ cash }}
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+
+    <div class="four columns">
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>
+                        {{currency2}}
+                    </th>
+                    <th>
+                        {{currency1}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for qty, cash in result2.items() %}
+            <tr>
+                <td>
+                    {{ qty }}
+                    </td>
+                <td>
+                    {{ cash }}
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
